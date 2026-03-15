@@ -1,0 +1,34 @@
+.controllerContainer {
+  position: absolute;
+  z-index: 9999;
+  bottom: 255px;
+  background: #080808;
+  width: 250px;
+  min-height: 300px;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 15px;
+}
+
+.mainAndHeader__ {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.myPetsLogo__ {
+  text-align: center;
+  color: aliceblue;
+}
+
+.controllerBtn {
+  color: aliceblue;
+  text-align: center;
+  cursor: pointer;
+}
+
+.hidden {
+  display: none;
+}

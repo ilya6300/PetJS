@@ -4,6 +4,7 @@ const huskyPawn = new URL("../../../images/pets/husky_1/husky_pawn.png", import.
 const huskyMove1 = new URL("../../../images/pets/husky_1/husky_move_1.png", import.meta.url).href;
 const huskyMove2 = new URL("../../../images/pets/husky_1/husky_move_2.png", import.meta.url).href;
 const huskyLie = new URL("../../../images/pets/husky_1/husky_lie.png", import.meta.url).href;
+const huskySleep = new URL("../../../images/pets/husky_1/husky_sleep.png", import.meta.url).href;
 
 export const fakeApiPets = [
   {
@@ -71,9 +72,18 @@ export const fakeApiPets = [
         default: false,
         event: "lie", // лежит
         source: huskyLie,
-        permittedEvents: [0, 1],
+        permittedEvents: [0, 1, 6],
         minTime: 5, // 10
         maxTime: 20, // 300
+      },
+      {
+        id: 6,
+        default: false,
+        event: "sleep", // лежит
+        source: huskySleep,
+        permittedEvents: [0, 1, 5],
+        minTime: 10, // 60
+        maxTime: 30, // 1200
       },
       // спит, игровой поклон
     ],
