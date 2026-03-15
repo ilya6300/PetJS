@@ -13,6 +13,7 @@ export default class Pet {
     this.baseSpeed = baseSpeed; // Базовая скорость
     this.stepDistance = stepDistance; // растояние шага
     this.direction = -1; // Направление движение при ходьбе
+    this.thisSpriteID = null; // Ссылка на спрайт PIXI
     this.view = null; // Ссылка на спрайт PIXI
     // ВАЖНО: Запускаем таймер для первого состояния сразу
     this.resetTimer();
@@ -106,6 +107,7 @@ export default class Pet {
     this.currentStatus = newStatus;
     console.log(newStatus);
     this.view.texture = this.assets[newStatus.event];
+    this.thisSpriteID = id;
     // Если это не движение — возвращаем нормальный масштаб
     if (!newStatus.event.includes("move")) {
       this.view.scale.x = 1;

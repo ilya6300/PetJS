@@ -10,6 +10,20 @@
   flex-direction: column;
   justify-content: space-between;
   padding: 15px;
+  filter: drop-shadow(2px 4px 6px black);
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Safari */
+  -khtml-user-select: none; /* Konqueror HTML */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none;
+  font-family: system-ui;
+}
+
+.flx_bw {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
 
 .mainAndHeader__ {
@@ -19,14 +33,27 @@
 }
 
 .myPetsLogo__ {
+  font-family: system-ui;
   text-align: center;
   color: aliceblue;
 }
 
+.controllerBtnLeft {
+  font-family: system-ui;
+  color: aliceblue;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+
 .controllerBtn {
+  font-family: system-ui;
   color: aliceblue;
   text-align: center;
   cursor: pointer;
+}
+
+.controllerBtnLeft:hover {
+  color: #1188e5;
 }
 
 .hidden {

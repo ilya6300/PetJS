@@ -26,7 +26,7 @@ const render = async () => {
   pet.view.cursor = "pointer";
 
   // Создаём контейнер с меню
-  const createController = viewControl();
+  const createController = viewControl(pet);
 
   pet.view.on("pointerdown", () => {
     // Для controls через js
