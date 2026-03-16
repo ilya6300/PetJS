@@ -1,96 +1,71 @@
-const createElement = (tag, classes, parameters) => {
-  // тэг html разметки, classes классы в строку 'hidden seper_class', parameters - массив атрибутов и значений [{attr: textContent, value: 'Команда!'}]
-  const _tag = document.createElement(tag);
-  if (classes && classes !== "") {
-    _tag.classList.add(...classes.split(" "));
-  }
+import { comandsContainer, getCommands } from "./actions/comands.js";
+import { interactionContainer, visibleInteractioPet } from "./actions/list.actions.js";
+import { createElement } from "./service/components/elements.js";
+import { getListUtilitys, utilitysContainer, visibleUtility } from "./utilitys/list.utility.js";
+import { notesContainer } from "./utilitys/notes.js";
 
-  if (parameters) {
-    parameters.forEach((p) => {
-      console.log(p);
-      _tag[p.attr] = p.value;
-    });
-  }
-  return _tag;
+// Основной контейнер меню
+const createController = createElement("div", "controllerContainer hidden");
+document.body.appendChild(createController);
+
+// логотип
+const createLogo = createElement("p", "myPetsLogo__", [{ attr: "textContent", value: "Мой асисстент" }]);
+
+// Контейнер с подменю и логотипом
+const mainAndHeader__ = createElement("div", "mainAndHeader__");
+
+// Контейнеры в подменю
+// Список подменю
+export const main = createElement("div", "mainAndHeader__");
+
+// Кнопка домой, возвращает на начальный экран меню
+export const createBtnHome = createElement("span", "controllerBtn hidden", [{ attr: "textContent", value: "Назад" }]);
+createBtnHome.onclick = () => {
+  goHomeMenu___();
 };
 
+// Функция возвращения в начало меню
+const goHomeMenu___ = () => {
+  main.classList.remove("hidden");
+  createBtnHome.classList.add("hidden");
+  comandsContainer.classList.add("hidden");
+  interactionContainer.classList.add("hidden");
+};
+
+// Кнопка закрытия всего меню
+const closedContainer = createElement("div", "mainAndHeader__");
+const createBtnClosed = createElement("span", "controllerBtn", [{ attr: "textContent", value: "Закрыть" }]);
+createBtnClosed.onclick = () => {
+  goHomeMenu___();
+  createController.classList.add("hidden");
+};
+
+// Основная функция отрисовки меню
 export const viewControl = (pet) => {
-  // Основной контейнер меню
-  const createController = createElement("div", "controllerContainer hidden");
+  // Позиционирование меню относительно питомца
   createController.style.left = `${pet.coordinates.x - 30}px`;
-  document.body.appendChild(createController);
 
-  // логотип
-  const createLogo = createElement("p", "myPetsLogo__", [{ attr: "textContent", value: "Мой асисстент" }]);
-
-  // Контейнер с подменю и логотипом
-  const mainAndHeader__ = createElement("div", "mainAndHeader__");
-
-  // Список подменю
-  const main = createElement("div", "mainAndHeader__");
-  const visibleComands = () => {
-    main.classList.add("hidden");
-    comandsContainer.classList.remove("hidden");
-    createBtnHome.classList.remove("hidden");
-  };
-
-  // Список интерактивных кновок у подменю
-  const listMainSubMenu = [{ name: "Команды", func: visibleComands }];
+  // Список интерактивных кнопок у подменю listMainSubMenu
+  const listMainSubMenu = [
+    { name: "Взаимодействие", func: visibleInteractioPet },
+    { name: "Инструменты", func: visibleUtility },
+  ];
   listMainSubMenu.forEach((btn) => {
     const createBtn = createElement("span", "controllerBtnLeft", [{ attr: "textContent", value: btn.name }]);
     createBtn.addEventListener("click", btn.func);
     main.append(createBtn);
   });
 
-  // Контейнер с командами
-  const comandsContainer = createElement("div", "mainAndHeader__ hidden");
+  // Взаимодействие
+  // Команды
+  getCommands(pet);
 
-  pet.commands.forEach((c) => {
-    // собираем строку
-    const row = createElement("div", "flx_bw");
-    const name = createElement("span", "controllerBtnLeft", [{ attr: "textContent", value: c.name }]);
-    const rate = createElement("span", "controllerBtnLeft", [{ attr: "textContent", value: `${c.successRate}%` }]);
-    row.append(name, rate);
-    comandsContainer.appendChild(row);
-    // применяем клики
-    row.onclick = () => {
-      const successRate = Math.random() * (100 - 1) + 1;
-      console.log("Команда:", pet.thisSpriteID);
-      if (c.id === pet.thisSpriteID) {
-        return console.log("Команда уже выполняется");
-      }
-      if (successRate > c.successRate) return;
-      if (c.successRate < 100) {
-        c.successRate += 1;
-        // ОБНОВЛЯЕМ ТЕКСТ ВИЗУАЛЬНО
-        rate.textContent = `${c.successRate}%`;
-      }
-      pet.setEvent(c.id); // ID для 'sid'
-    };
-  });
-
-  const closedContainer = createElement("div", "mainAndHeader__");
-  // Кнопка закрыть
-  const createBtnClosed = createElement("span", "controllerBtn", [{ attr: "textContent", value: "Закрыть" }]);
-  createBtnClosed.onclick = () => {
-    goHomeMenu___();
-    createController.classList.add("hidden");
-  };
-
-  // Кнопка домой, возвращает на начальный экран меню
-  const createBtnHome = createElement("span", "controllerBtn hidden", [{ attr: "textContent", value: "Назад" }]);
-  createBtnHome.onclick = () => {
-    goHomeMenu___();
-  };
-
-  const goHomeMenu___ = () => {
-    main.classList.remove("hidden");
-    createBtnHome.classList.add("hidden");
-    comandsContainer.classList.add("hidden");
-  };
+  // Инструменты
+  // Заметки
+  getListUtilitys()
 
   // Вкладываем все вложения
-  mainAndHeader__.append(createLogo, comandsContainer, main);
+  mainAndHeader__.append(createLogo, comandsContainer, interactionContainer, utilitysContainer, notesContainer, main);
   closedContainer.append(createBtnHome, createBtnClosed);
   createController.append(mainAndHeader__, closedContainer);
   return createController;
