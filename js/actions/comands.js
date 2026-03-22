@@ -1,3 +1,4 @@
+import { useEnergy } from "../components/ui/statics.bar.js";
 import { createElement } from "../service/components/elements.js";
 
 // Контейнер с командами
@@ -18,7 +19,11 @@ export const getCommands = (pet) => {
       if (c.id === pet.thisSpriteID) {
         return console.log("Команда уже выполняется");
       }
+      if (pet.energy === 0) {
+        return console.log("Питомец устал");
+      }
       if (successRate > c.successRate) return;
+      useEnergy(pet);
       if (c.successRate < 100) {
         c.successRate += 1;
         // ОБНОВЛЯЕМ ТЕКСТ ВИЗУАЛЬНО

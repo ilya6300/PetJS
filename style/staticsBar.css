@@ -1,0 +1,13 @@
+.icon_statics {
+  width: 14px;
+}
+.icon_text {
+  color: #d68f0c;
+  font-size: 18px;
+}
+.container_static {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  gap: 8px;
+}

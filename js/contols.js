@@ -1,12 +1,18 @@
 import { comandsContainer, getCommands } from "./actions/comands.js";
 import { interactionContainer, visibleInteractioPet } from "./actions/list.actions.js";
+import { staticsBar } from "./components/ui/statics.bar.js";
 import { createElement } from "./service/components/elements.js";
+import data from "./service/state/data.js";
 import { getListUtilitys, utilitysContainer, visibleUtility } from "./utilitys/list.utility.js";
 import { notesContainer } from "./utilitys/notes.js";
 
+// создаём задний фон
+const createControllerBack = createElement("div", "controllerContainerBack hidden");
+document.body.appendChild(createControllerBack);
+
 // Основной контейнер меню
-const createController = createElement("div", "controllerContainer hidden");
-document.body.appendChild(createController);
+const createController = createElement("div", "controllerContainer");
+createControllerBack.appendChild(createController);
 
 // логотип
 const createLogo = createElement("p", "myPetsLogo__", [{ attr: "textContent", value: "Мой асисстент" }]);
@@ -37,13 +43,23 @@ const closedContainer = createElement("div", "mainAndHeader__");
 const createBtnClosed = createElement("span", "controllerBtn", [{ attr: "textContent", value: "Закрыть" }]);
 createBtnClosed.onclick = () => {
   goHomeMenu___();
-  createController.classList.add("hidden");
+  createControllerBack.classList.add("hidden");
+};
+
+// Применение стилей из апи
+export const selectStyle = (item) => {
+  // Применяем стили
+  console.log(item);
+  createControllerBack.style.background = item.background;
+  createControllerBack.style.width = item.width;
+  createControllerBack.style.height = item.height;
 };
 
 // Основная функция отрисовки меню
 export const viewControl = (pet) => {
+  selectStyle(data.style);
   // Позиционирование меню относительно питомца
-  createController.style.left = `${pet.coordinates.x - 30}px`;
+  createControllerBack.style.left = `${pet.coordinates.x - 30}px`;
 
   // Список интерактивных кнопок у подменю listMainSubMenu
   const listMainSubMenu = [
@@ -62,11 +78,11 @@ export const viewControl = (pet) => {
 
   // Инструменты
   // Заметки
-  getListUtilitys()
+  getListUtilitys();
 
   // Вкладываем все вложения
-  mainAndHeader__.append(createLogo, comandsContainer, interactionContainer, utilitysContainer, notesContainer, main);
+  mainAndHeader__.append(createLogo, staticsBar(pet), comandsContainer, interactionContainer, utilitysContainer, notesContainer, main);
   closedContainer.append(createBtnHome, createBtnClosed);
   createController.append(mainAndHeader__, closedContainer);
-  return createController;
+  return createControllerBack;
 };

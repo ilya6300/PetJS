@@ -1,7 +1,7 @@
 export default class Pet {
-  constructor(name, dataSkin, baseSpeed, stepDistance, commands) {
+  constructor(id, name, dataSkin, baseSpeed, stepDistance, commands, energy, timeIncrement, style, intervalIncrement) {
     this.name = name; // Имя питомца
-    this.dataSkin = dataSkin; // данные событий fakeApiPets.data
+    ((this.id = id), (this.dataSkin = dataSkin)); // данные событий fakeApiPets.data
     // this.assets = assets; // Здесь хранятся загруженные спрайты PIXI.Assets
     this.coordinates = { x: window.innerWidth, y: window.innerHeight };
     this.commands = commands;
@@ -15,6 +15,10 @@ export default class Pet {
     this.direction = -1; // Направление движение при ходьбе
     this.thisSpriteID = null; // Ссылка на спрайт PIXI
     this.view = null; // Ссылка на спрайт PIXI
+    this.energy = energy;
+    this.timeIncrement = timeIncrement; // Сохраняем когда должна пополнится энергия
+    this.intervalIncrement = intervalIncrement; // Скорость пополнения
+    this.style = style;
     // ВАЖНО: Запускаем таймер для первого состояния сразу
     this.resetTimer();
   }
@@ -105,7 +109,6 @@ export default class Pet {
   setEvent(id) {
     const newStatus = this.dataSkin.find((s) => s.id === id);
     this.currentStatus = newStatus;
-    console.log(newStatus);
     this.view.texture = this.assets[newStatus.event];
     this.thisSpriteID = id;
     // Если это не движение — возвращаем нормальный масштаб
@@ -115,6 +118,10 @@ export default class Pet {
       this.walkTimer = 0; // Сразу меняем кадр при начале движения
     }
     this.resetTimer();
-    console.log(`Новое состояние: ${newStatus.event} на ${this.timeLeft.toFixed(2)}с`);
   }
+
+  // Принимает элемент, у которого меняет указанный стиль и этот стиль берёт из объекта стиль
+  selectStyle = (element, style, name) => {
+    element.style[style] = this.style[name];
+  };
 }

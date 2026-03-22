@@ -1,45 +1,21 @@
-const huskyStand = new URL(
-  "../../../images/pets/husky_1/husky_stand.png",
-  import.meta.url,
-).href;
-const huskySid = new URL(
-  "../../../images/pets/husky_1/husky_sid.png",
-  import.meta.url,
-).href;
-const huskyPawn = new URL(
-  "../../../images/pets/husky_1/husky_pawn.png",
-  import.meta.url,
-).href;
-const huskyMove1 = new URL(
-  "../../../images/pets/husky_1/husky_move_1.png",
-  import.meta.url,
-).href;
-const huskyMove2 = new URL(
-  "../../../images/pets/husky_1/husky_move_2.png",
-  import.meta.url,
-).href;
-const huskyLie = new URL(
-  "../../../images/pets/husky_1/husky_lie.png",
-  import.meta.url,
-).href;
-const huskySleep = new URL(
-  "../../../images/pets/husky_1/husky_sleep.png",
-  import.meta.url,
-).href;
-const huskySleep2 = new URL(
-  "../../../images/pets/husky_1/husky_sleep2.png",
-  import.meta.url,
-).href;
-const huskyGame = new URL(
-  "../../../images/pets/husky_1/husky_game.png",
-  import.meta.url,
-).href;
+const huskyStand = new URL("../../../images/pets/husky_1/husky_stand.png", import.meta.url).href;
+const huskySid = new URL("../../../images/pets/husky_1/husky_sid.png", import.meta.url).href;
+const huskyPawn = new URL("../../../images/pets/husky_1/husky_pawn.png", import.meta.url).href;
+const huskyMove1 = new URL("../../../images/pets/husky_1/husky_move_1.png", import.meta.url).href;
+const huskyMove2 = new URL("../../../images/pets/husky_1/husky_move_2.png", import.meta.url).href;
+const huskyLie = new URL("../../../images/pets/husky_1/husky_lie.png", import.meta.url).href;
+const huskySleep = new URL("../../../images/pets/husky_1/husky_sleep.png", import.meta.url).href;
+const huskySleep2 = new URL("../../../images/pets/husky_1/husky_sleep2.png", import.meta.url).href;
+const huskyGame = new URL("../../../images/pets/husky_1/husky_game.png", import.meta.url).href;
 
 export const fakeApiPets = [
   {
     type: "dog",
     name: "husky",
     id: 0,
+    energy: 8,
+    timeIncrement: null, // Время когда должна прибавится энергия
+    intervalIncrement: 5000, // Время через которое восстанавливается одна энергия
     parameters: {
       baseSpeed: 1.5, // Базовая скорость
       stepDistance: 30, // растояние шага
@@ -133,5 +109,29 @@ export const fakeApiPets = [
         maxTime: 8, // 5
       },
     ],
+  },
+];
+
+export const fakeStyle = [
+  {
+    // стили контейнера
+    background: "rgb(17 136 229 / 64%)",
+    scale: 0.7,
+    width: "256px",
+    height: "326px",
+    id: 0,
+    active: false,
+    borderRadius: "8px",
+    name: "По умолчанию",
+  },
+  {
+    background: "#ffaa0094",
+    scale: 0.7,
+    width: "264px",
+    height: "334px",
+    id: 1,
+    active: true,
+    borderRadius: "2px",
+    name: "Бронзовый",
   },
 ];
